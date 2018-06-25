@@ -1,0 +1,52 @@
+<div class="well">
+  <form #product="ngForm" (ngSubmit)="onSubmit(product.value)">
+    <div class="form-group">
+      <label for="Product ID">Product ID</label>
+      <input type="text" id="productId" pattern="[a-zA-Z].+" class="form-control" ngModel name="productId" #productId="ngModel"
+        placeholder="P12345" minlength="5" required/>
+      <div class="alert alert-danger" *ngIf="productId.touched && !productId.valid">
+        <div *ngIf="productId.errors.required">
+          Product ID is required
+        </div>
+        <div *ngIf="productId.errors.pattern">
+          Enter valid Product ID
+        </div>
+        <div *ngIf="productId.errors.minlength">
+          Product ID should be minimum {{ productId.errors.minlength.requiredLength }} characters.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Product name">Product Name</label>
+      <input type="text" class="form-control" name="name" #pName="ngModel" ngModel placeholder="Product name" required>
+      <div class="alert alert-danger" *ngIf="pName.touched && !pName.valid">
+        <div *ngIf="pName.errors.required">
+          Name is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Price">Price</label>
+      <input type="number" class="form-control" name="price" #price="ngModel" ngModel placeholder="Enter price" min="0" required>
+      <div class="alert alert-danger" *ngIf="price.touched && !price.valid">
+        <div *ngIf="price.errors.required">
+          Price is required
+        </div>
+        <div *ngIf="price.errors.minlength">
+          Price should be minimum {{ price.errors.minlength.requiredLength }} characters.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input name="Instock" #instock="ngModel" ngModel type="checkbox" required=c hecked> Instock
+        </label>
+      </div>
+    </div>
+    <span>
+      <button type="submit" class="btn btn-success" [disabled]="!product.valid">Submit</button>
+    </span>
+  </form>
+</div>

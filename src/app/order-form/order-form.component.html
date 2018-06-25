@@ -1,0 +1,65 @@
+<div class="well">
+    <form [formGroup]="form">
+
+        <div class="form-group form-inline">
+            <label for="OrderNumber">Order Number:</label>
+            <input formControlName="OrderNumber" id="OrderNumber" pattern="[a-zA-Z].+" type="text" class="form-control" />
+            <div *ngIf="OrderNumber.touched && OrderNumber.invalid" class="alert alert-danger">
+                <div *ngIf="OrderNumber.errors.required">Order Number is required.</div>
+            </div>
+        </div>
+        <div class=form-inline>
+            <div class="form-group">
+                <label for="OrderDate">Order Date</label>
+                <input formControlName="OrderDate" id="OrderDate" type="date" class="form-control" />
+                <div *ngIf="OrderDate.touched && OrderDate.invalid" class="alert alert-danger">
+                    <div *ngIf="OrderDate.errors.required">Order Date can not be empty.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="customerName">Customer Name</label>
+                <input formControlName="customerName" id="customerName" type="text" class="form-control" />
+                <div *ngIf="customerName.touched && customerName.invalid" class="alert alert-danger">
+                    <div *ngIf="customerName.errors.required">customer Name can not be empty.</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <span>
+                <button id="addItem" class="btn btn-primary" type="button" (click)="additem()">
+                    Add Item
+                </button>
+            </span>
+        </div>
+        <table class="table row">
+            <thead>
+                <tr>
+                    <th class="col-md-2">Item</th>
+                    <th class="col-md-2">Quantity</th>
+                    <th class="col-md-2">Price</th>
+                    <th class="col-md-2">Amount</th>
+                    <th class="col-md-2 m-5"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr formArrayName="itemRow" *ngFor="let item of itemRow.controls; let i=index">
+                    <td class="form-group" [formGroupName]="i">
+                        <input type="text" formControlName="itemName" class="form-control" id="{{'itemNameId' + i}}" />
+                    </td>
+                    <td class="form-group" [formGroupName]="i">
+                        <input type="number" class="form-control" id="{{'quantityId' + i}}" min="0" formControlName="quantity" [(ngModel)]="item.quantity">
+                    </td>
+                    <td class="form-group" [formGroupName]="i">
+                        <input type="number" class="form-control" id="{{'price' + i}}" min="0" formControlName="price" [(ngModel)]="item.price">
+                    </td>
+                    <td class="form-group" [formGroupName]="i">
+                        <input type="number" class="form-control" id="{{'amount' + i}}" min="0" formControlName="amount" value='{{item.price * item.quantity}}'>
+                    </td>
+                    <td class="m-5">
+                        <button class="btn btn-danger mx-4" (click)="removeitem(i)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
